@@ -35,10 +35,14 @@ extension TimeDifference on DateTime {
   String getDay(String datePattern) {
     final differenceInDays = difference(DateTime.now()).inDays;
     final timeFormatted = DateFormat.Hm().format(this);
+    
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final yesterday = today.subtract(const Duration(days: 1));
 
-    if (differenceInDays == 0) {
+    if (this.day == today.day && this.month == today.month && this.year == today.year) {
       return "${PackageStrings.today}, $timeFormatted";
-    } else if (differenceInDays == -1) {
+    } else if (this.day == yesterday.day && this.month == yesterday.month && this.year == yesterday.year) {
       return "${PackageStrings.yesterday}, $timeFormatted";
     } else {
       final DateFormat dateFormatter = DateFormat(datePattern);
