@@ -38,6 +38,8 @@ extension TimeDifference on DateTime {
 
     if (differenceInDays == 0) {
       return "${PackageStrings.today}, $timeFormatted";
+    } else if (differenceInDays == -1) {
+      return "${PackageStrings.yesterday}, $timeFormatted";
     } else {
       final DateFormat dateFormatter = DateFormat(datePattern);
       final formattedDate = dateFormatter.format(this);
