@@ -22,6 +22,7 @@
 import 'package:chatview/chatview.dart';
 import 'package:chatview/src/inherited_widgets/configurations_inherited_widgets.dart';
 import 'package:chatview/src/widgets/chat_view_inherited_widget.dart';
+import 'package:chatview/src/widgets/date_strings_inherited_widget.dart';
 import 'package:chatview/src/widgets/profile_image_widget.dart';
 import 'package:chatview/src/widgets/suggestions/suggestions_config_inherited_widget.dart';
 import 'package:flutter/material.dart';
@@ -32,18 +33,21 @@ import '../utils/package_strings.dart';
 
 /// Extension for DateTime to get specific formats of dates and time.
 extension TimeDifference on DateTime {
-  String getDay(String datePattern) {
-    final differenceInDays = difference(DateTime.now()).inDays;
+  String getDay(String datePattern, BuildContext context) {
     final timeFormatted = DateFormat.Hm().format(this);
+    
+    final customStrings = DateStringsInheritedWidget.of(context)?.dateStrings;
+    final todayString = customStrings?.today ?? PackageStrings.today;
+    final yesterdayString = customStrings?.yesterday ?? PackageStrings.yesterday;
     
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     final yesterday = today.subtract(const Duration(days: 1));
 
     if (this.day == today.day && this.month == today.month && this.year == today.year) {
-      return "${PackageStrings.today}, $timeFormatted";
+      return "$todayString, $timeFormatted";
     } else if (this.day == yesterday.day && this.month == yesterday.month && this.year == yesterday.year) {
-      return "${PackageStrings.yesterday}, $timeFormatted";
+      return "$yesterdayString, $timeFormatted";
     } else {
       final DateFormat dateFormatter = DateFormat(datePattern);
       final formattedDate = dateFormatter.format(this);

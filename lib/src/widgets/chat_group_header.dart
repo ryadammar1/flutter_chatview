@@ -46,7 +46,7 @@ class ChatGroupHeader extends StatelessWidget {
       child: Text(
         day.getDay(
           groupSeparatorConfig?.chatSeparatorDatePattern ??
-              defaultChatSeparatorDatePattern,
+              defaultChatSeparatorDatePattern, context
         ),
         textAlign: TextAlign.center,
         style: groupSeparatorConfig?.textStyle ?? const TextStyle(fontSize: 17),
